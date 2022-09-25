@@ -1,4 +1,4 @@
-FROM {{ caddy_image }}:{{ caddy_builder_image_tag }} AS builder
+FROM {{ caddy_builder_image }}:{{ caddy_builder_image_tag }} AS builder
 
 RUN xcaddy build \
     {{% for plugin in caddy_plugins %}}
