@@ -1,0 +1,78 @@
+---
+# tasks file for caddy_docker
+- name: Create Caddy config directory
+  ansible.builtin.file:
+    src: "{{ caddy_docker_config_path }}"
+    state: directory
+    mode: 0755
+
+- name: Create Caddy data directory
+  ansible.builtin.file:
+    src: "{{ caddy_docker_data_path }}"
+    state: directory
+    mode: 0755
+
+- name: Create Caddyfile
+  ansible.builtin.copy:
+    content: "{{ caddy_docker_caddyfile }}"
+    dest: "{{ caddy_docker_caddyfile_path }}"
+    mode: 0755
+  notify: Reload Caddy configuration
+
+- name: Caddy with plugins
+  block:
+    - name: Create Caddy dockerfile from template
+      ansible.builtin.template:
+        src: "{{ caddy_docker_builder_template }}"
+        dest: /tmp/dockerfile
+        mode: 0755
+
+    - name: Build Caddy container image
+      community.docker.docker_image:
+        name: "caddy-custom:plugins"
+        build:
+          path: /tmp/dockerfile
+          pull: true
+        source: build
+        state: present
+        debug: true
+
+    - name: Override caddy_docker_image and caddy_docker_image_tag
+      ansible.builtin.set_fact:
+        caddy_docker_image: caddy-custom
+        caddy_docker_image_tag: plugins
+  when: caddy_docker_plugins
+
+- name: Create Caddy Docker ingress network
+  community.docker.docker_network:
+    name: "{{ caddy_docker_ingress_network }}"
+
+- name: Set caddy_docker_volumes
+  ansible.builtin.set_fact:
+    caddy_docker_volumes:
+      # Caddyfile
+      - "{{ caddy_docker_caddyfile_path }}:/etc/caddy/Caddyfile"
+      # Caddy data
+      - "{{ caddy_docker_data_path }}:/data"
+      # Caddy config
+      - "{{ caddy_docker_config_path }}:/config"
+
+- name: Add caddy_docker_extra_volumes
+  ansible.builtin.set_fact:
+    caddy_docker_volumes: "{{ caddy_docker_volumes + caddy_docker_extra_volumes }}"
+  when: caddy_docker_extra_volumes
+
+- name: Create Caddy Docker container
+  community.docker.docker_container:
+    name: caddy
+    image: "{{ caddy_docker_image }}:{{ caddy_docker_image_tag }}"
+    command: "{{ caddy_docker_command }}"
+    restart_policy: "{{ caddy_docker_restart_policy }}"
+    networks:
+      - name: "{{ caddy_docker_ingress_network }}"
+    ports: "{{ caddy_docker_ports }}"
+    exposed_ports: "{{ caddy_docker_exposed_ports }}"
+    etc_hosts: "{{ caddy_docker_etc_hosts }}"
+    volumes: "{{ caddy_docker_volumes }}"
+    env: "{{ caddy_docker_environment_variables }}"
+    state: started
