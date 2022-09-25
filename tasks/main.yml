@@ -46,6 +46,7 @@
 - name: Create Caddy Docker ingress network
   community.docker.docker_network:
     name: "{{ caddy_docker_ingress_network }}"
+    state: present
 
 - name: Set caddy_docker_volumes
   ansible.builtin.set_fact:
