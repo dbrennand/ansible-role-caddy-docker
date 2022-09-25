@@ -1,0 +1,16 @@
+---
+# defaults file for caddy_docker
+caddy_config_path: /etc/caddy/config/
+caddy_data_path: /etc/caddy/data/
+caddy_caddyfile: |-
+  localhost
+  respond "Hello, world!"
+caddy_caddyfile_path: /etc/caddy/Caddyfile
+caddy_image: caddy
+caddy_image_tag: 2.6.1-alpine
+caddy_builder_image: caddy
+caddy_builder_image_tag: 2.6.1-builder
+caddy_builder_template: dockerfile.j2
+caddy_plugins: []
+caddy_environment_variables: {}
+caddy_command: caddy
