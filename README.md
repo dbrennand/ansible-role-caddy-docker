@@ -7,9 +7,9 @@ Ansible role to deploy [Caddy](https://caddyserver.com/) in a Docker container.
 
 ## Requirements
 
-* [Docker](https://www.docker.com/).
+* [Docker](https://www.docker.com/)
 
-* [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/).
+* [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/)
 
 ## Role Variables
 
