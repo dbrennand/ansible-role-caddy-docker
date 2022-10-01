@@ -20,6 +20,7 @@
   notify: Reload Caddy configuration
 
 - name: Caddy with plugins
+  when: caddy_docker_plugins
   block:
     - name: Create Caddy dockerfile from template
       ansible.builtin.template:
@@ -41,7 +42,6 @@
       ansible.builtin.set_fact:
         caddy_docker_image: caddy-custom
         caddy_docker_image_tag: plugins
-  when: caddy_docker_plugins
 
 - name: Create Caddy Docker ingress network
   community.docker.docker_network:
@@ -76,4 +76,9 @@
     etc_hosts: "{{ caddy_docker_etc_hosts }}"
     volumes: "{{ caddy_docker_volumes }}"
     env: "{{ caddy_docker_environment_variables }}"
+    state: present
+
+- name: Start Caddy Docker container
+  community.docker.docker_container:
+    name: caddy
     state: started
