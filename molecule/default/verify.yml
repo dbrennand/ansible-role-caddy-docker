@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Verify Caddy is responding on localhost
+      ansible.builtin.uri:
+        url: http://localhost
+        return_content: true
+      register: caddy_resp
+      failed_when: "'Hello, world!' not in caddy_resp.content"
