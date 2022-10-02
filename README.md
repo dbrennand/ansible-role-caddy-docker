@@ -141,6 +141,43 @@ None.
     - dbrennand.caddy_docker
 ```
 
+## Molecule Tests
+
+To test the role, use Molecule: `molecule test`
+
+### `systemd` with cgroups v2
+
+Spent an afternoon working to get `systemd` working inside a container with cgroups v2.
+
+With cgroups v1, the method for running `systemd` inside a container was: `--privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro` however, using this in Gitpod workspaces I observed the following error inside the container:
+
+```
+Failed to create /init.scope control group: Read-only file system
+Failed to allocate manager object: Read-only file system
+[!!!!!!] Failed to allocate manager object.
+Exiting PID 1...
+```
+
+:sad:
+
+I quickly realised that this does not work in Gitpod workspaces because it uses [cgroups v2](https://github.com/gitpod-io/gitpod/issues/9775).
+
+After much Googling I found this [serverfault](https://serverfault.com/questions/1053187/systemd-fails-to-run-in-a-docker-container-when-using-cgroupv2-cgroupns-priva) thread which helped me find the solution.
+
+The solution is to include `--cgroup-parent=docker.slice --cgroupns private` in the `docker run` command.
+
+Example:
+
+```bash
+docker run -itd --rm \
+  --privileged \
+  --cgroup-parent=docker.slice --cgroupns private \
+  --tmpfs /tmp --tmpfs /run --tmpfs /run/lock \
+  geerlingguy/docker-debian10-ansible:latest
+```
+
+Once added, `systemd` starts as expected! Hurray!
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) for details.
