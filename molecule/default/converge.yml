@@ -1,7 +1,23 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    pip_install_packages:
+      - name: docker
   pre_tasks:
+    - name: Install Ansible roles
+      delegate_to: localhost
+      block:
+        - name: Install geerlingguy.pip role
+          community.general.ansible_galaxy_install:
+            type: role
+            name: geerlingguy.pip
+
+        - name: Install geerlingguy.docker role
+          community.general.ansible_galaxy_install:
+            type: role
+            name: geerlingguy.docker
+
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: true
@@ -20,6 +36,14 @@
       changed_when: false
       failed_when: systemctl_status.rc > 1
   tasks:
+    - name: Include geerlingguy.pip
+      ansible.builtin.include_role:
+        name: geerlingguy.pip
+
+    - name: Include geerlingguy.docker
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+
     - name: Include dbrennand.caddy_docker
       ansible.builtin.include_role:
         name: dbrennand.caddy_docker
