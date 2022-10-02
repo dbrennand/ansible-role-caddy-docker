@@ -1,5 +1,6 @@
 # Ansible Role: dbrennand.caddy_docker
 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/dbrennand/ansible-role-caddy-docker)
 ![Ansible-Lint](https://github.com/dbrennand/ansible-role-caddy-docker/actions/workflows/ansible-lint.yml/badge.svg)
 ![Ansible-Release](https://github.com/dbrennand/ansible-role-caddy-docker/actions/workflows/ansible-release.yml/badge.svg)
 
