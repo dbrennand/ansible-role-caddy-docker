@@ -1,0 +1,18 @@
+name: Molecule
+on: [pull_request]
+
+defaults:
+  run:
+    working-directory: dbrennand.caddy_docker
+
+jobs:
+  molecule:
+    # Use ubuntu-22.04 for cgroups v2 support
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: dbrennand.caddy_docker
+      - uses: gofrolist/molecule-action@v2
+        with:
+          molecule_working_dir: dbrennand.caddy_docker
