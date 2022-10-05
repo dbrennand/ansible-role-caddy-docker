@@ -2,13 +2,13 @@
 # tasks file for caddy_docker
 - name: Create Caddy config directory
   ansible.builtin.file:
-    src: "{{ caddy_docker_config_path }}"
+    path: "{{ caddy_docker_config_path }}"
     state: directory
     mode: 0755
 
 - name: Create Caddy data directory
   ansible.builtin.file:
-    src: "{{ caddy_docker_data_path }}"
+    path: "{{ caddy_docker_data_path }}"
     state: directory
     mode: 0755
 
