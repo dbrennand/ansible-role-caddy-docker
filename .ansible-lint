@@ -10,3 +10,5 @@ exclude_paths:
 skip_list:
   - template-instead-of-copy
 use_default_rules: true
+mock_modules:
+  - community.general.packaging.language.ansible_galaxy_install
