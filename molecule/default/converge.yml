@@ -10,13 +10,13 @@
       block:
         - name: Install geerlingguy.pip role
           community.general.packaging.language.ansible_galaxy_install:
-            type: role
             name: geerlingguy.pip
+            type: role
 
         - name: Install geerlingguy.docker role
           community.general.packaging.language.ansible_galaxy_install:
-            type: role
             name: geerlingguy.docker
+            type: role
 
     - name: Update apt cache
       ansible.builtin.apt:
