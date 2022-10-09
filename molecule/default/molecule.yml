@@ -6,13 +6,10 @@ driver:
 platforms:
   - name: instance
     image: geerlingguy/docker-debian11-ansible:latest
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-    override_command: false
-    tmpfs:
-      - /tmp
-      - /run
-      - /run/lock
 provisioner:
   name: ansible
 verifier:
