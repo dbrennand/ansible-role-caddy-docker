@@ -32,7 +32,7 @@
       community.docker.docker_image:
         name: "caddy-custom:plugins"
         build:
-          path: /tmp/dockerfile
+          dockerfile: /tmp/dockerfile
           pull: true
         source: build
         state: present
