@@ -23,7 +23,7 @@
         update_cache: true
 
     # Credit: https://github.com/geerlingguy/ansible-role-docker/blob/master/molecule/default/converge.yml#L11
-    - name: Wait for systemd to complete initialisation  # noqa 303
+    - name: Wait for systemd to complete initialisation  # noqa command-instead-of-module
       ansible.builtin.command:
         cmd: systemctl is-system-running
       register: systemctl_status
