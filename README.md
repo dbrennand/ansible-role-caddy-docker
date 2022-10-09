@@ -142,7 +142,7 @@ None.
     - dbrennand.caddy_docker
 ```
 
-## Molecule Tests
+## Molecule Tests 🧪
 
 To test the role, use molecule: `molecule test`
 
