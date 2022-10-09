@@ -4,6 +4,8 @@
   vars:
     pip_install_packages:
       - name: docker
+    docker_daemon_options:
+      storage-driver: "vfs"
   pre_tasks:
     - name: Update apt cache
       ansible.builtin.apt:
