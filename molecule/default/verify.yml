@@ -7,5 +7,6 @@
       ansible.builtin.uri:
         url: http://localhost
         return_content: true
+        validate_certs: false
       register: caddy_resp
       failed_when: "'Hello, world!' not in caddy_resp.content"
