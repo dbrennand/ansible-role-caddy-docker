@@ -6,6 +6,9 @@
       - name: docker
     docker_daemon_options:
       storage-driver: "vfs"
+    caddy_docker_plugins:
+      - github.com/lucaslorentz/caddy-docker-proxy/plugin
+      - github.com/caddy-dns/cloudflare
   pre_tasks:
     - name: Update apt cache
       ansible.builtin.apt:
