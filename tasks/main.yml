@@ -25,14 +25,15 @@
     - name: Create Caddy dockerfile from template
       ansible.builtin.template:
         src: "{{ caddy_docker_builder_template }}"
-        dest: /tmp/dockerfile
+        dest: /tmp/caddy_dockerfile
         mode: 0755
 
     - name: Build Caddy container image
       community.docker.docker_image:
         name: "caddy-custom:plugins"
         build:
-          dockerfile: /tmp/dockerfile
+          dockerfile: caddy_dockerfile
+          path: /tmp
           pull: true
         source: build
         state: present
