@@ -5,19 +5,6 @@
     pip_install_packages:
       - name: docker
   pre_tasks:
-    - name: Install Ansible roles
-      delegate_to: localhost
-      block:
-        - name: Install geerlingguy.pip role
-          community.general.packaging.language.ansible_galaxy_install:
-            name: geerlingguy.pip
-            type: role
-
-        - name: Install geerlingguy.docker role
-          community.general.packaging.language.ansible_galaxy_install:
-            name: geerlingguy.docker
-            type: role
-
     - name: Update apt cache
       ansible.builtin.apt:
         update_cache: true
