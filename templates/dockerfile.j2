@@ -2,7 +2,7 @@ FROM {{ caddy_docker_builder_image }}:{{ caddy_docker_builder_image_tag }} AS bu
 
 RUN xcaddy build \
     {% for plugin in caddy_docker_plugins %}
-    --with {{ plugin }} {{ \ if not loop.last }}
+    --with {{ plugin }} {{ "\\" if not loop.last }}
     {% endfor %}
 
 FROM {{ caddy_docker_image }}:{{ caddy_docker_image_tag }}
