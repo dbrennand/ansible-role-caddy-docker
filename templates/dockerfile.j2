@@ -1,9 +1,9 @@
 FROM {{ caddy_docker_builder_image }}:{{ caddy_docker_builder_image_tag }} AS builder
 
 RUN xcaddy build \
-    {{% for plugin in caddy_docker_plugins %}}
+    {% for plugin in caddy_docker_plugins %}
     --with {{ plugin }} {{ \ if not loop.last }}
-    {{% endfor %}}
+    {% endfor %}
 
 FROM {{ caddy_docker_image }}:{{ caddy_docker_image_tag }}
 
