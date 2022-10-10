@@ -16,8 +16,8 @@ Ansible role to deploy [Caddy](https://caddyserver.com/) in a Docker container.
 ## Role Variables
 
 ```yaml
-caddy_docker_config_path: /etc/caddy/config/
-caddy_docker_data_path: /etc/caddy/data/
+caddy_docker_config_directory: /etc/caddy/config/
+caddy_docker_data_directory: /etc/caddy/data/
 ```
 
 Absolute path to Caddy config and data directories to be created. Attached to the container as bind mounts.

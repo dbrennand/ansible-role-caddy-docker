@@ -2,13 +2,13 @@
 # tasks file for caddy_docker
 - name: Create Caddy config directory
   ansible.builtin.file:
-    path: "{{ caddy_docker_config_path }}"
+    path: "{{ caddy_docker_config_directory }}"
     state: directory
     mode: 0755
 
 - name: Create Caddy data directory
   ansible.builtin.file:
-    path: "{{ caddy_docker_data_path }}"
+    path: "{{ caddy_docker_data_directory }}"
     state: directory
     mode: 0755
 
@@ -60,9 +60,9 @@
       # Caddyfile
       - "{{ caddy_docker_caddyfile_path }}:/etc/caddy/Caddyfile"
       # Caddy data
-      - "{{ caddy_docker_data_path }}:/data"
+      - "{{ caddy_docker_data_directory }}:/data"
       # Caddy config
-      - "{{ caddy_docker_config_path }}:/config"
+      - "{{ caddy_docker_config_directory }}:/config"
 
 - name: Add caddy_docker_extra_volumes
   ansible.builtin.set_fact:

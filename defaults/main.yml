@@ -1,7 +1,7 @@
 ---
 # defaults file for caddy_docker
-caddy_docker_config_path: /etc/caddy/config/
-caddy_docker_data_path: /etc/caddy/data/
+caddy_docker_config_directory: /etc/caddy/config/
+caddy_docker_data_directory: /etc/caddy/data/
 caddy_docker_caddyfile: |-
   localhost
   respond "Hello, world!"
