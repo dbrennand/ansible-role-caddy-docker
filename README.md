@@ -43,7 +43,13 @@ caddy_docker_builder_image: caddy
 caddy_docker_builder_image_tag: 2.6.1-builder
 ```
 
-Container image repositories, names and tags used to deploy Caddy as a container. The `*builder_*` variables are only used when `caddy_docker_plugins` is populated.
+Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_*` variables are only used when `caddy_docker_plugins` is populated.
+
+```yaml
+caddy_docker_builder_directory: /etc/caddy/builder/
+```
+
+Absolute path for the directory used as the container build context. This variable is only used when `caddy_docker_plugins` is populated. You may want to override this variable if you bring your own dockerfile template and want to include files during the Caddy container's build process.
 
 ```yaml
 caddy_docker_builder_template: dockerfile.j2

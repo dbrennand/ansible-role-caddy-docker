@@ -22,18 +22,23 @@
 - name: Caddy with plugins
   when: caddy_docker_plugins
   block:
+    - name: Create Caddy builder directory
+      ansible.builtin.file:
+        path: "{{ caddy_docker_builder_directory }}"
+        state: directory
+        mode: 0755
+
     - name: Create Caddy dockerfile from template
       ansible.builtin.template:
         src: "{{ caddy_docker_builder_template }}"
-        dest: /tmp/caddy_dockerfile
+        dest: "{{ caddy_docker_builder_directory }}/dockerfile"
         mode: 0755
 
     - name: Build Caddy container image
       community.docker.docker_image:
         name: "caddy-custom:plugins"
         build:
-          dockerfile: caddy_dockerfile
-          path: /tmp
+          path: "{{ caddy_docker_builder_directory }}"
           pull: true
         source: build
         state: present
