@@ -13,7 +13,7 @@ Ansible role to deploy [Caddy](https://caddyserver.com/) in a Docker container.
 
 * [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/)
 
-* [`community.docker`]() Ansible collection:
+* [`community.docker`](https://galaxy.ansible.com/community/docker) Ansible collection:
 
   ```bash
   ansible-galaxy collection install community.docker
