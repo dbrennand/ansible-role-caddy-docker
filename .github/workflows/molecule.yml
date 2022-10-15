@@ -1,0 +1,17 @@
+name: Molecule
+on: [push, pull_request]
+
+defaults:
+  run:
+    working-directory: dbrennand.caddy_docker
+
+jobs:
+  molecule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: dbrennand.caddy_docker
+      - uses: gofrolist/molecule-action@v2
+        with:
+          molecule_working_dir: dbrennand.caddy_docker

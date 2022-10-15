@@ -1,0 +1,14 @@
+galaxy_info:
+  role_name: caddy_docker
+  author: dbrennand
+  description: Deploy Caddy in a Docker container
+  license: license (MIT)
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+  galaxy_tags:
+    - caddy
+    - docker
+dependencies: []

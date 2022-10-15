@@ -1,0 +1,26 @@
+---
+# defaults file for caddy_docker
+caddy_docker_config_directory: /etc/caddy/config/
+caddy_docker_data_directory: /etc/caddy/data/
+caddy_docker_caddyfile: |-
+  localhost
+  respond "Hello, world!"
+caddy_docker_caddyfile_path: /etc/caddy/Caddyfile
+caddy_docker_image: caddy
+caddy_docker_image_tag: 2.6.1-alpine
+caddy_docker_builder_image: caddy
+caddy_docker_builder_image_tag: 2.6.1-builder
+caddy_docker_builder_directory: /etc/caddy/builder/
+caddy_docker_builder_template: dockerfile.j2
+caddy_docker_plugins: []
+caddy_docker_ingress_network: caddy
+caddy_docker_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+caddy_docker_restart_policy: unless-stopped
+caddy_docker_ports:
+  - 80:80
+  - 443:443
+  - "443:443/udp"
+caddy_docker_exposed_ports: []
+caddy_docker_etc_hosts: {}
+caddy_docker_extra_volumes: []
+caddy_docker_environment_variables: {}
