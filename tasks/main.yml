@@ -1,7 +1,7 @@
 ---
 # tasks file for caddy_docker
 
-- name: "Create Caddy directories {{ item.path }}"
+- name: Create Caddy directories
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
