@@ -1,16 +1,16 @@
 ---
 # defaults file for caddy_docker
-caddy_docker_config_directory: /etc/caddy/config/
-caddy_docker_data_directory: /etc/caddy/data/
+caddy_docker_config_directory: ~/.config/caddy/
+caddy_docker_data_directory: ~/.local/share/caddy/
 caddy_docker_caddyfile: |-
   localhost
   respond "Hello, world!"
-caddy_docker_caddyfile_path: /etc/caddy/Caddyfile
+caddy_docker_caddyfile_path: ~/.config/Caddyfile
 caddy_docker_image: caddy
 caddy_docker_image_tag: 2.6.1-alpine
 caddy_docker_builder_image: caddy
 caddy_docker_builder_image_tag: 2.6.1-builder
-caddy_docker_builder_directory: /etc/caddy/builder/
+caddy_docker_builder_directory: ~/.config/caddy-builder/
 caddy_docker_builder_template: dockerfile.j2
 caddy_docker_plugins: []
 caddy_docker_ingress_network: caddy
