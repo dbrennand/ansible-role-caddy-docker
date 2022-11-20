@@ -1,22 +1,24 @@
 ---
 # tasks file for caddy_docker
-- name: Create Caddy config directory
-  ansible.builtin.file:
-    path: "{{ caddy_docker_config_directory }}"
-    state: directory
-    mode: 0755
 
-- name: Create Caddy data directory
+- name: "Create Caddy directories {{ item.path }}"
   ansible.builtin.file:
-    path: "{{ caddy_docker_data_directory }}"
+    path: "{{ item.path }}"
     state: directory
-    mode: 0755
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(0700) }}"
+  with_items:
+    - "{{ caddy_docker_config_directory }}"
+    - "{{ caddy_docker_data_directory }}"
 
 - name: Create Caddyfile
   ansible.builtin.copy:
     content: "{{ caddy_docker_caddyfile }}"
-    dest: "{{ caddy_docker_caddyfile_path }}"
-    mode: 0755
+    dest: "{{ caddy_docker_caddyfile_file.path }}"
+    owner: "{{ caddy_docker_caddyfile_file.owner | default(omit) }}"
+    group: "{{ caddy_docker_caddyfile_file.group | default(omit) }}"
+    mode: "{{ caddy_docker_caddyfile_file.mode | default(0700) }}"
   notify: Reload Caddy configuration
 
 - name: Caddy with plugins
@@ -24,21 +26,23 @@
   block:
     - name: Create Caddy builder directory
       ansible.builtin.file:
-        path: "{{ caddy_docker_builder_directory }}"
+        path: "{{ caddy_docker_builder_directory.path }}"
         state: directory
-        mode: 0755
+        owner: "{{ caddy_docker_builder_directory.owner | default(omit) }}"
+        group: "{{ caddy_docker_builder_directory.group | default(omit) }}"
+        mode: "{{ caddy_docker_builder_directory.mode | default(0755) }}"
 
     - name: Create Caddy dockerfile from template
       ansible.builtin.template:
         src: "{{ caddy_docker_builder_template }}"
-        dest: "{{ caddy_docker_builder_directory }}/dockerfile"
+        dest: "{{ caddy_docker_builder_directory.path }}/dockerfile"
         mode: 0755
 
     - name: Build Caddy container image
       community.docker.docker_image:
         name: "caddy-custom:plugins"
         build:
-          path: "{{ caddy_docker_builder_directory }}"
+          path: "{{ caddy_docker_builder_directory.path }}"
           pull: true
         source: build
         state: present
@@ -58,11 +62,11 @@
   ansible.builtin.set_fact:
     caddy_docker_volumes:
       # Caddyfile
-      - "{{ caddy_docker_caddyfile_path }}:/etc/caddy/Caddyfile"
+      - "{{ caddy_docker_caddyfile_file.path }}:/etc/caddy/Caddyfile"
       # Caddy data
-      - "{{ caddy_docker_data_directory }}:/data"
+      - "{{ caddy_docker_data_directory.path }}:/data"
       # Caddy config
-      - "{{ caddy_docker_config_directory }}:/config"
+      - "{{ caddy_docker_config_directory.path }}:/config"
 
 - name: Add caddy_docker_extra_volumes
   ansible.builtin.set_fact:
