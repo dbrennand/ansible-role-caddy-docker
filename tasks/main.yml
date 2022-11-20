@@ -18,7 +18,7 @@
     dest: "{{ caddy_docker_caddyfile_file.path }}"
     owner: "{{ caddy_docker_caddyfile_file.owner | default(omit) }}"
     group: "{{ caddy_docker_caddyfile_file.group | default(omit) }}"
-    mode: "{{ caddy_docker_caddyfile_file.mode | default(0700) }}"
+    mode: "{{ caddy_docker_caddyfile_file.mode | default('0700') }}"
   notify: Reload Caddy configuration
 
 - name: Caddy with plugins
@@ -30,7 +30,7 @@
         state: directory
         owner: "{{ caddy_docker_builder_directory.owner | default(omit) }}"
         group: "{{ caddy_docker_builder_directory.group | default(omit) }}"
-        mode: "{{ caddy_docker_builder_directory.mode | default(0755) }}"
+        mode: "{{ caddy_docker_builder_directory.mode | default('0755') }}"
 
     - name: Create Caddy dockerfile from template
       ansible.builtin.template:
