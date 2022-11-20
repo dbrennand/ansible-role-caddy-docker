@@ -7,7 +7,7 @@
     state: directory
     owner: "{{ item.owner | default(omit) }}"
     group: "{{ item.group | default(omit) }}"
-    mode: "{{ item.mode | default(0700) }}"
+    mode: "{{ item.mode | default('0700') }}"
   with_items:
     - "{{ caddy_docker_config_directory }}"
     - "{{ caddy_docker_data_directory }}"
