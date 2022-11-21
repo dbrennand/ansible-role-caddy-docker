@@ -22,8 +22,15 @@ Ansible role to deploy [Caddy](https://caddyserver.com/) in a Docker container.
 ## Role Variables
 
 ```yaml
-caddy_docker_config_directory: /etc/caddy/config/
-caddy_docker_data_directory: /etc/caddy/data/
+caddy_docker_config_directory:
+  path: ~/.config/caddy/
+  # Optional
+  # owner: owner
+  # group: group
+  # mode: 0755
+caddy_docker_data_directory:
+  path: ~/.local/share/caddy/
+  # ...
 ```
 
 Absolute path to Caddy config and data directories to be created. Attached to the container as bind mounts.
@@ -37,7 +44,9 @@ caddy_docker_caddyfile: |-
 Contents of the [Caddyfile](https://caddyserver.com/docs/caddyfile) used to configure Caddy.
 
 ```yaml
-caddy_docker_caddyfile_path: /etc/caddy/Caddyfile
+caddy_docker_caddyfile_file:
+  path: ~/.config/Caddyfile
+  # ...
 ```
 
 Absolute path to the Caddyfile to be created. Attached to the container as a bind mount.
@@ -52,7 +61,9 @@ caddy_docker_builder_image_tag: 2.6.1-builder
 Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_*` variables are only used when `caddy_docker_plugins` is populated.
 
 ```yaml
-caddy_docker_builder_directory: /etc/caddy/builder/
+caddy_docker_builder_directory:
+  path: /tmp/caddy-builder/
+  # ...
 ```
 
 Absolute path for the directory used as the container build context. This variable is only used when `caddy_docker_plugins` is populated. You may want to override this variable if you bring your own dockerfile template and want to include files during the Caddy container's build process.
