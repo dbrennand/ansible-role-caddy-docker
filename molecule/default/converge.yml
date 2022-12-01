@@ -9,6 +9,7 @@
     caddy_docker_plugins:
       - github.com/lucaslorentz/caddy-docker-proxy/plugin
       - github.com/caddy-dns/cloudflare
+    caddy_docker_network_mode: host
   pre_tasks:
     - name: Update apt cache
       ansible.builtin.apt:

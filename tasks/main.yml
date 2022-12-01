@@ -80,6 +80,7 @@
     restart_policy: "{{ caddy_docker_restart_policy }}"
     networks:
       - name: "{{ caddy_docker_ingress_network }}"
+    network_mode: "{{ caddy_docker_network_mode | default(omit) }}"
     ports: "{{ caddy_docker_ports }}"
     exposed_ports: "{{ caddy_docker_exposed_ports }}"
     etc_hosts: "{{ caddy_docker_etc_hosts }}"
