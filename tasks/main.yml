@@ -48,10 +48,9 @@
         state: present
         debug: true
 
-    - name: Override caddy_docker_image and caddy_docker_image_tag
+    - name: Override caddy_docker_image
       ansible.builtin.set_fact:
-        caddy_docker_image: caddy-custom
-        caddy_docker_image_tag: plugins
+        caddy_docker_image: caddy-custom:plugins
 
 - name: Create Caddy Docker ingress network
   community.docker.docker_network:
@@ -76,7 +75,7 @@
 - name: Create Caddy Docker container
   community.docker.docker_container:
     name: caddy
-    image: "{{ caddy_docker_image }}:{{ caddy_docker_image_tag }}"
+    image: "{{ caddy_docker_image }}"
     command: "{{ caddy_docker_command }}"
     restart_policy: "{{ caddy_docker_restart_policy }}"
     networks:

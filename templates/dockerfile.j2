@@ -1,10 +1,10 @@
-FROM {{ caddy_docker_builder_image }}:{{ caddy_docker_builder_image_tag }} AS builder
+FROM {{ caddy_docker_builder_image }} AS builder
 
 RUN xcaddy build \
     {% for plugin in caddy_docker_plugins %}
     --with {{ plugin }} {{ "\\" if not loop.last }}
     {% endfor %}
 
-FROM {{ caddy_docker_image }}:{{ caddy_docker_image_tag }}
+FROM {{ caddy_docker_image }}
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy

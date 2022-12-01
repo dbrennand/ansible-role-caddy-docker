@@ -9,10 +9,8 @@ caddy_docker_caddyfile: |-
   respond "Hello, world!"
 caddy_docker_caddyfile_file:
   path: ~/.config/Caddyfile
-caddy_docker_image: caddy
-caddy_docker_image_tag: 2.6.2-alpine
-caddy_docker_builder_image: caddy
-caddy_docker_builder_image_tag: 2.6.2-builder
+caddy_docker_image: caddy:2.6.2-alpine
+caddy_docker_builder_image: caddy:2.6.2-builder
 caddy_docker_builder_directory:
   path: /tmp/caddy-builder/
 caddy_docker_builder_template: dockerfile.j2
