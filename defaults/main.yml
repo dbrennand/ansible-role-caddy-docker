@@ -15,7 +15,8 @@ caddy_docker_builder_directory:
   path: /tmp/caddy-builder/
 caddy_docker_builder_template: dockerfile.j2
 caddy_docker_plugins: []
-caddy_docker_ingress_network: caddy
+caddy_docker_networks:
+  - name: caddy
 caddy_docker_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
 caddy_docker_restart_policy: unless-stopped
 caddy_docker_ports:
