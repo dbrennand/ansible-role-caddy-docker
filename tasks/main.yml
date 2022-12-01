@@ -52,11 +52,12 @@
       ansible.builtin.set_fact:
         caddy_docker_image: caddy-custom:plugins
 
-- name: Create Caddy Docker ingress network
+- name: Create Caddy Docker network(s)
   when: caddy_docker_network_mode != "host"
   community.docker.docker_network:
-    name: "{{ caddy_docker_ingress_network }}"
+    name: "{{ item.name }}"
     state: present
+  with_items: "{{ caddy_docker_network }}"
 
 - name: Set caddy_docker_volumes
   ansible.builtin.set_fact:
@@ -80,8 +81,7 @@
     command: "{{ caddy_docker_command }}"
     restart_policy: "{{ caddy_docker_restart_policy }}"
     network_mode: "{{ caddy_docker_network_mode | default(omit) }}"
-    networks:
-      - name: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_ingress_network }}"
+    networks: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_network }}"
     ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_ports }}"
     exposed_ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_exposed_ports }}"
     etc_hosts: "{{ caddy_docker_etc_hosts }}"
