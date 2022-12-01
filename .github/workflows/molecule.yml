@@ -1,5 +1,5 @@
 name: Molecule
-on: [push, pull_request]
+on: [pull_request]
 
 defaults:
   run:
@@ -15,3 +15,4 @@ jobs:
       - uses: gofrolist/molecule-action@v2
         with:
           molecule_working_dir: dbrennand.caddy_docker
+          molecule_args: --all
