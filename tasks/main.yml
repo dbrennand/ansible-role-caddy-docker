@@ -80,7 +80,7 @@
     image: "{{ caddy_docker_image }}"
     command: "{{ caddy_docker_command }}"
     restart_policy: "{{ caddy_docker_restart_policy }}"
-    network_mode: "{{ caddy_docker_network_mode | default('default') }}"
+    network_mode: "{{ caddy_docker_network_mode | default('default', True) }}"
     networks: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_networks }}"
     ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_ports }}"
     exposed_ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_exposed_ports }}"
