@@ -36,7 +36,7 @@
       ansible.builtin.template:
         src: "{{ caddy_docker_builder_template }}"
         dest: "{{ caddy_docker_builder_directory.path }}/dockerfile"
-        mode: 0755
+        mode: 0655
 
     - name: Build Caddy container image
       community.docker.docker_image:
