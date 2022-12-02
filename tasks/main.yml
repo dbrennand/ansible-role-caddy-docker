@@ -57,7 +57,7 @@
     name: "{{ item.name }}"
     state: present
   with_items: "{{ caddy_docker_networks }}"
-  when: caddy_docker_network_mode is not defined or caddy_docker_network_mode != "host"
+  when: caddy_docker_network_mode != "host"
 
 - name: Set caddy_docker_volumes
   ansible.builtin.set_fact:
@@ -80,7 +80,7 @@
     image: "{{ caddy_docker_image }}"
     command: "{{ caddy_docker_command }}"
     restart_policy: "{{ caddy_docker_restart_policy }}"
-    network_mode: "{{ omit if caddy_docker_network_mode is not defined else caddy_docker_network_mode }}"
+    network_mode: "{{ caddy_docker_network_mode }}"
     networks: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_networks }}"
     ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_ports }}"
     exposed_ports: "{{ omit if caddy_docker_network_mode == 'host' else caddy_docker_exposed_ports }}"
