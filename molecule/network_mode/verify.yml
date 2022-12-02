@@ -15,5 +15,5 @@
       community.docker.docker_network_info:
         name: "{{ item.name }}"
       with_items: "{{ caddy_docker_networks }}"
-      register: network_result
-      failed_when: network_result.exists
+      register: network
+      failed_when: network.exists
