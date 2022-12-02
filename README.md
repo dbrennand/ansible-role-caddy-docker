@@ -92,6 +92,12 @@ caddy_docker_networks:
 Names of the Docker networks to be created and attached to the Caddy container.
 
 ```yaml
+caddy_docker_network_mode: default
+```
+
+Docker network mode to use for the Caddy container. The `caddy_docker_networks`, `caddy_docker_ports` and `caddy_docker_exposed_ports` variables have no affect when this variable is set to `host`.
+
+```yaml
 caddy_docker_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
 ```
 
@@ -142,14 +148,6 @@ caddy_docker_environment_variables: {}
 ```
 
 Environment variables to apply to the Caddy container.
-
-### Optional
-
-```yaml
-caddy_docker_network_mode: host
-```
-
-Docker network mode to use for the Caddy container. The `caddy_docker_networks`, `caddy_docker_ports` and `caddy_docker_exposed_ports` variables have no affect when this variable is set to `host`.
 
 ## Dependencies
 
