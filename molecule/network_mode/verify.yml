@@ -10,3 +10,11 @@
         validate_certs: false
       register: caddy_resp
       failed_when: "'Hello, world!' not in caddy_resp.content"
+
+    - name: Verify Caddy Docker networks do not exist
+      community.docker.docker_network_info:
+        name: "{{ item }}"
+      with_items:
+        - caddy
+      register: network
+      failed_when: network.exists
