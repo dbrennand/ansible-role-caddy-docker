@@ -9,15 +9,15 @@ caddy_docker_caddyfile: |-
   respond "Hello, world!"
 caddy_docker_caddyfile_file:
   path: ~/.config/Caddyfile
-caddy_docker_image: caddy
-caddy_docker_image_tag: 2.6.2-alpine
-caddy_docker_builder_image: caddy
-caddy_docker_builder_image_tag: 2.6.2-builder
+caddy_docker_image: caddy:2.6.2-alpine
+caddy_docker_builder_image: caddy:2.6.2-builder
 caddy_docker_builder_directory:
   path: /tmp/caddy-builder/
 caddy_docker_builder_template: dockerfile.j2
 caddy_docker_plugins: []
-caddy_docker_ingress_network: caddy
+caddy_docker_networks:
+  - name: caddy
+caddy_docker_network_mode: default
 caddy_docker_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
 caddy_docker_restart_policy: unless-stopped
 caddy_docker_ports:

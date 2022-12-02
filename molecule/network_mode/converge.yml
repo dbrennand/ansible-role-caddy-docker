@@ -6,6 +6,7 @@
       - name: docker
     docker_daemon_options:
       storage-driver: "vfs"
+    caddy_docker_network_mode: host
   pre_tasks:
     - name: Update apt cache
       ansible.builtin.apt:

@@ -52,13 +52,11 @@ caddy_docker_caddyfile_file:
 Absolute path to the Caddyfile to be created. Attached to the container as a bind mount.
 
 ```yaml
-caddy_docker_image: caddy
-caddy_docker_image_tag: 2.6.1-alpine
-caddy_docker_builder_image: caddy
-caddy_docker_builder_image_tag: 2.6.1-builder
+caddy_docker_image: caddy:2.6.2-alpine
+caddy_docker_builder_image: caddy:2.6.2-builder
 ```
 
-Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_*` variables are only used when `caddy_docker_plugins` is populated.
+Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_image` variable is only used when `caddy_docker_plugins` is populated.
 
 ```yaml
 caddy_docker_builder_directory:
@@ -87,10 +85,17 @@ caddy_docker_plugins: []
 List of plugins to include in the Caddy container.
 
 ```yaml
-caddy_docker_ingress_network: caddy
+caddy_docker_networks:
+  - name: caddy
 ```
 
-Name of the ingress Docker network to be created and attached to the Caddy container.
+Names of the Docker networks to be created and attached to the Caddy container.
+
+```yaml
+caddy_docker_network_mode: default
+```
+
+Docker network mode to use for the Caddy container. The `caddy_docker_networks`, `caddy_docker_ports` and `caddy_docker_exposed_ports` variables have no affect when this variable is set to `host`.
 
 ```yaml
 caddy_docker_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
