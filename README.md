@@ -175,7 +175,7 @@ None.
 
 This example uses the [Cloudflare module for Caddy](https://github.com/caddy-dns/cloudflare) to obtain certificates (including wildcards) from Let's Encrypt for a [Cloudflare](https://www.cloudflare.com) managed domain. This is useful when you want to obtain certificates without opening port 80 (HTTP) to the internet.
 
-You **must** generate an API token for Caddy to authenticate to the Cloudflare API and create a TXT record for the DNS-01 challenge.
+You **must** generate an API token for Caddy to authenticate to the Cloudflare API and create a TXT record for the DNS-01 challenge:
 
 1. Go to the [Cloudflare dashboard profile page](https://dash.cloudflare.com/profile).
 
