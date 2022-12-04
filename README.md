@@ -156,6 +156,7 @@ None.
 ## Example Playbook
 
 ```yaml
+- name: dbrennand.caddy_docker
 - hosts: all
   vars:
     pip_install_packages:
@@ -167,6 +168,114 @@ None.
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
+    - dbrennand.caddy_docker
+```
+
+### Example - Cloudflare DNS-01 Challenge
+
+This example uses the [Cloudflare module for Caddy](https://github.com/caddy-dns/cloudflare) to obtain certificates (including wildcards) from Let's Encrypt for a [Cloudflare](https://www.cloudflare.com) managed domain. This is useful when you want to obtain certificates without opening port 80 (HTTP) to the internet.
+
+You **must** generate an API token for Caddy to authenticate to the Cloudflare API and create a TXT record for the DNS-01 challenge:
+
+1. Go to the [Cloudflare dashboard profile page](https://dash.cloudflare.com/profile).
+
+2. On the left select **API Tokens** > **Create Token**.
+
+3. Select the API token template named **Edit zone DNS**.
+
+4. Modify the **Token name** to your liking.
+
+5. Under *Permissions* select **+ Add more** and add the permission: `Zone / Zone / Read`.
+
+6. Under *Zone Resources* include your zone: `Include / Specific zone / example.tld`.
+
+7. *Optional* - Configure Client IP Address Filtering if desired.
+
+8. Click **Continue to summary** > **Create Token**.
+
+```yaml
+- name: dbrennand.caddy_docker - Cloudflare
+  hosts: all
+  vars:
+    # geerlingguy.pip role vars
+    pip_install_packages:
+      - name: docker
+    # dbrennand.caddy_docker role vars
+    caddy_docker_caddyfile: |-
+      {
+              email {$ACME_EMAIL}
+      }
+
+      # Cloudflare DNS-01 challenge
+      (cloudflare) {
+              tls {
+                      dns cloudflare {$CLOUDFLARE_API_TOKEN}
+              }
+      }
+
+      service.{$DOMAIN} {
+              import cloudflare
+              reverse_proxy container:port
+      }
+    caddy_docker_plugins:
+      - github.com/caddy-dns/cloudflare
+    caddy_docker_environment_variables:
+      DOMAIN: domain.tld
+      ACME_EMAIL: email@domain.tld
+      CLOUDFLARE_API_TOKEN: token
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - dbrennand.caddy_docker
+```
+
+### Example - [Tailscale](https://tailscale.com/)
+
+This example uses [artis3n/ansible-role-tailscale](https://github.com/artis3n/ansible-role-tailscale) to install Tailscale and configure Caddy to obtain a certificate from Let's Encrypt for your Tailscale node. You **must** have [MagicDNS](https://tailscale.com/kb/1081/magicdns/) and [HTTPS Certificate](https://tailscale.com/kb/1153/enabling-https/) features enabled for your Tailnet.
+
+```yaml
+- name: dbrennand.caddy_docker - Tailscale
+  hosts: all
+  vars:
+    # geerlingguy.pip role vars
+    pip_install_packages:
+      - name: docker
+    # artis3n.tailscale role vars
+    tailscale_authkey: key
+    # dbrennand.caddy_docker role vars
+    caddy_docker_caddyfile: |-
+      {
+              email {$ACME_EMAIL}
+      }
+
+      # Tailscale
+      (tailscale) {
+              tls {
+                      get_certificate tailscale
+              }
+      }
+
+      node.{$TAILNET} {
+              import tailscale
+              reverse_proxy container:port
+      }
+    caddy_docker_extra_volumes:
+      - /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock
+    caddy_docker_environment_variables:
+      ACME_EMAIL: email@domain.tld
+      TAILNET: domain-alias.ts.net
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - artis3n.tailscale
     - dbrennand.caddy_docker
 ```
 
