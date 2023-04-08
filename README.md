@@ -78,8 +78,8 @@ Dockerfile template used to build the Caddy container. This variable is only use
 caddy_docker_plugins: []
 # Example
 # caddy_docker_plugins:
-#   - github.com/lucaslorentz/caddy-docker-proxy/plugin
 #   - github.com/caddy-dns/cloudflare
+#   - github.com/lucaslorentz/caddy-docker-proxy/v2
 ```
 
 List of plugins to include in the Caddy container.
