@@ -1,0 +1,15 @@
+{
+    "image": "ghcr.io/ansible/creator-ee:v0.14.1",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "redhat.ansible",
+                "github.copilot",
+                "yzhang.markdown-all-in-one",
+                "eamodio.gitlens"
+            ]
+        }
+    },
+    "postCreateCommand": "ansible-galaxy install -r requirements.yml"
+}
