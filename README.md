@@ -52,8 +52,8 @@ caddy_docker_caddyfile_file:
 Absolute path to the Caddyfile to be created. Attached to the container as a bind mount.
 
 ```yaml
-caddy_docker_image: caddy:2.6.2-alpine
-caddy_docker_builder_image: caddy:2.6.2-builder
+caddy_docker_image: caddy:2.6.4-alpine
+caddy_docker_builder_image: caddy:2.6.4-builder
 ```
 
 Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_image` variable is only used when `caddy_docker_plugins` is populated.
@@ -157,7 +157,7 @@ None.
 
 ```yaml
 - name: dbrennand.caddy_docker
-- hosts: all
+  hosts: all
   vars:
     pip_install_packages:
       - name: docker
