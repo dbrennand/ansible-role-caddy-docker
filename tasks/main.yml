@@ -45,6 +45,7 @@
           path: "{{ caddy_docker_builder_directory.path }}"
           pull: true
         source: build
+        force_source: "{{ caddy_docker_builder_force }}"
         state: present
         debug: true
 
