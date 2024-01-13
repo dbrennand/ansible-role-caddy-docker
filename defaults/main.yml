@@ -9,11 +9,12 @@ caddy_docker_caddyfile: |-
   respond "Hello, world!"
 caddy_docker_caddyfile_file:
   path: ~/.config/Caddyfile
-caddy_docker_image: caddy:2.7.4-alpine
-caddy_docker_builder_image: caddy:2.7.4-builder
+caddy_docker_image: caddy:2.7.6-alpine
+caddy_docker_builder_image: caddy:2.7.6-builder
 caddy_docker_builder_directory:
   path: /tmp/caddy-builder/
 caddy_docker_builder_template: dockerfile.j2
+caddy_docker_builder_force: false
 caddy_docker_plugins: []
 caddy_docker_networks:
   - name: caddy

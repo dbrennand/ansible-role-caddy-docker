@@ -1,6 +1,5 @@
 # Ansible Role: dbrennand.caddy_docker
 
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/dbrennand/ansible-role-caddy-docker)
 ![Ansible-Lint](https://github.com/dbrennand/ansible-role-caddy-docker/actions/workflows/ansible-lint.yml/badge.svg)
 ![Molecule](https://github.com/dbrennand/ansible-role-caddy-docker/actions/workflows/molecule.yml/badge.svg)
 ![Ansible-Release](https://github.com/dbrennand/ansible-role-caddy-docker/actions/workflows/ansible-release.yml/badge.svg)
@@ -73,6 +72,12 @@ caddy_docker_builder_template: dockerfile.j2
 ```
 
 Dockerfile template used to build the Caddy container. This variable is only used when `caddy_docker_plugins` is populated.
+
+```yaml
+caddy_docker_builder_force: false
+```
+
+Whether or not to force a rebuild of the Caddy container. This variable is only used when `caddy_docker_plugins` is populated.
 
 ```yaml
 caddy_docker_plugins: []
