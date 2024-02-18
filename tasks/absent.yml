@@ -1,0 +1,40 @@
+---
+# absent tasks file for caddy_docker
+
+- name: Remove Caddy directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items:
+    - "{{ caddy_docker_config_directory }}"
+    - "{{ caddy_docker_data_directory }}"
+
+- name: Remove Caddyfile
+  ansible.builtin.file:
+    path: "{{ caddy_docker_caddyfile_file.path }}"
+    state: absent
+
+- name: Caddy with plugins
+  when: caddy_docker_plugins
+  block:
+    - name: Remove Caddy builder directory
+      ansible.builtin.file:
+        path: "{{ caddy_docker_builder_directory.path }}"
+        state: absent
+
+    - name: Remove Caddy container image
+      community.docker.docker_image:
+        name: "caddy-custom:plugins"
+        state: absent
+
+- name: Remove Caddy Docker network(s)
+  when: caddy_docker_network_mode != "host"
+  community.docker.docker_network:
+    name: "{{ item.name }}"
+    state: absent
+  with_items: "{{ caddy_docker_networks }}"
+
+- name: Remove Caddy Docker container
+  community.docker.docker_container:
+    name: caddy
+    state: absent

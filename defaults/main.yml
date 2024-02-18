@@ -1,5 +1,6 @@
 ---
 # defaults file for caddy_docker
+caddy_docker_state: present
 caddy_docker_config_directory:
   path: ~/.config/caddy/
 caddy_docker_data_directory:

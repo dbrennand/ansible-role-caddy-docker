@@ -21,6 +21,12 @@ Ansible role to deploy [Caddy](https://caddyserver.com/) in a Docker container.
 ## Role Variables
 
 ```yaml
+caddy_docker_state: present
+```
+
+Manage the state of the resources deployed by this role. Set to `absent` to remove the Caddy directories (data and config), Caddyfile, Docker network(s), image and container.
+
+```yaml
 caddy_docker_config_directory:
   path: ~/.config/caddy/
   # Optional
