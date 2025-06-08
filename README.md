@@ -28,17 +28,20 @@ Manage the state of the resources deployed by this role. Set to `absent` to remo
 
 ```yaml
 caddy_docker_config_directory:
-  path: ~/.config/caddy/
+  path: ~/.config/caddy
   # Optional
   # owner: owner
   # group: group
   # mode: 0755
 caddy_docker_data_directory:
-  path: ~/.local/share/caddy/
+  path: ~/.local/share/caddy
+  # ...
+caddy_docker_caddyfile_directory:
+  path: ~/.config/caddyfile
   # ...
 ```
 
-Absolute path to Caddy config and data directories to be created. Attached to the container as bind mounts.
+Absolute path to the Caddy config directory, data directory and directory to place the Caddyfile into. Attached to the container as bind mounts.
 
 ```yaml
 caddy_docker_caddyfile: |-
@@ -50,15 +53,15 @@ Contents of the [Caddyfile](https://caddyserver.com/docs/caddyfile) used to conf
 
 ```yaml
 caddy_docker_caddyfile_file:
-  path: ~/.config/Caddyfile
+  path: "{{ caddy_docker_caddyfile_directory.path }}/Caddyfile"
   # ...
 ```
 
-Absolute path to the Caddyfile to be created. Attached to the container as a bind mount.
+Absolute path to the Caddyfile to be created. You should not need to modify this variable in most scenarios and leave it as the default.
 
 ```yaml
-caddy_docker_image: caddy:2.7.4-alpine
-caddy_docker_builder_image: caddy:2.7.4-builder
+caddy_docker_image: caddy:2.10.0-alpine
+caddy_docker_builder_image: caddy:2.10.0-builder
 ```
 
 Container image repositories, names and tags used to deploy Caddy as a container. The `caddy_docker_builder_image` variable is only used when `caddy_docker_plugins` is populated.

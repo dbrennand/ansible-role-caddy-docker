@@ -2,18 +2,20 @@
 # defaults file for caddy_docker
 caddy_docker_state: present
 caddy_docker_config_directory:
-  path: ~/.config/caddy/
+  path: ~/.config/caddy
 caddy_docker_data_directory:
-  path: ~/.local/share/caddy/
+  path: ~/.local/share/caddy
 caddy_docker_caddyfile: |-
   localhost
   respond "Hello, world!"
+caddy_docker_caddyfile_directory:
+  path: ~/.config/caddyfile
 caddy_docker_caddyfile_file:
-  path: ~/.config/Caddyfile
-caddy_docker_image: caddy:2.7.6-alpine
-caddy_docker_builder_image: caddy:2.7.6-builder
+  path: "{{ caddy_docker_caddyfile_directory.path }}/Caddyfile"
+caddy_docker_image: caddy:2.10.0-alpine
+caddy_docker_builder_image: caddy:2.10.0-builder
 caddy_docker_builder_directory:
-  path: /tmp/caddy-builder/
+  path: /tmp/caddy-builder
 caddy_docker_builder_template: dockerfile.j2
 caddy_docker_builder_force: false
 caddy_docker_plugins: []

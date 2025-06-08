@@ -11,6 +11,7 @@
   with_items:
     - "{{ caddy_docker_config_directory }}"
     - "{{ caddy_docker_data_directory }}"
+    - "{{ caddy_docker_caddyfile_directory }}"
 
 - name: present | Create Caddyfile
   ansible.builtin.copy:
@@ -63,8 +64,10 @@
 - name: present | Set caddy_docker_volumes
   ansible.builtin.set_fact:
     caddy_docker_volumes:
-      # Caddyfile
-      - "{{ caddy_docker_caddyfile_file.path }}:/etc/caddy/Caddyfile"
+      # Caddyfile configuration directory
+      # Mount the directory rather than the file directly due to:
+      # https://github.com/caddyserver/caddy/issues/5735#issuecomment-1675896585
+      - "{{ caddy_docker_caddyfile_directory.path }}:/etc/caddy"
       # Caddy data
       - "{{ caddy_docker_data_directory.path }}:/data"
       # Caddy config
