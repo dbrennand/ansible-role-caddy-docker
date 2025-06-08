@@ -1,10 +1,10 @@
 ---
 # tasks file for caddy_docker
 
-- name: Install | Caddy Docker
+- name: present | Caddy Docker
   ansible.builtin.import_tasks: present.yml
   when: caddy_docker_state == "present"
 
-- name: Uninstall | Caddy Docker
+- name: absent | Caddy Docker
   ansible.builtin.import_tasks: absent.yml
   when: caddy_docker_state == "absent"

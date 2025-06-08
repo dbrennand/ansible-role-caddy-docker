@@ -1,7 +1,7 @@
 ---
 # present tasks file for caddy_docker
 
-- name: Create Caddy directories
+- name: present | Create Caddy directories
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
@@ -12,7 +12,7 @@
     - "{{ caddy_docker_config_directory }}"
     - "{{ caddy_docker_data_directory }}"
 
-- name: Create Caddyfile
+- name: present | Create Caddyfile
   ansible.builtin.copy:
     content: "{{ caddy_docker_caddyfile }}"
     dest: "{{ caddy_docker_caddyfile_file.path }}"
@@ -21,10 +21,10 @@
     mode: "{{ caddy_docker_caddyfile_file.mode | default('0600') }}"
   notify: Reload Caddy configuration
 
-- name: Caddy with plugins
+- name: present | Caddy with plugins
   when: caddy_docker_plugins
   block:
-    - name: Create Caddy builder directory
+    - name: present | Create Caddy builder directory
       ansible.builtin.file:
         path: "{{ caddy_docker_builder_directory.path }}"
         state: directory
@@ -32,13 +32,13 @@
         group: "{{ caddy_docker_builder_directory.group | default(omit) }}"
         mode: "{{ caddy_docker_builder_directory.mode | default('0755') }}"
 
-    - name: Create Caddy dockerfile from template
+    - name: present | Create Caddy dockerfile from template
       ansible.builtin.template:
         src: "{{ caddy_docker_builder_template }}"
         dest: "{{ caddy_docker_builder_directory.path }}/dockerfile"
         mode: u=rw,g=r,o=r
 
-    - name: Build Caddy container image
+    - name: present | Build Caddy container image
       community.docker.docker_image:
         name: "caddy-custom:plugins"
         build:
@@ -49,18 +49,18 @@
         state: present
         debug: true
 
-    - name: Override caddy_docker_image
+    - name: present | Override caddy_docker_image
       ansible.builtin.set_fact:
         caddy_docker_image: caddy-custom:plugins
 
-- name: Create Caddy Docker network(s)
+- name: present | Create Caddy Docker network(s)
   when: caddy_docker_network_mode != "host"
   community.docker.docker_network:
     name: "{{ item.name }}"
     state: present
   with_items: "{{ caddy_docker_networks }}"
 
-- name: Set caddy_docker_volumes
+- name: present | Set caddy_docker_volumes
   ansible.builtin.set_fact:
     caddy_docker_volumes:
       # Caddyfile
@@ -70,12 +70,12 @@
       # Caddy config
       - "{{ caddy_docker_config_directory.path }}:/config"
 
-- name: Add caddy_docker_extra_volumes
+- name: present | Add caddy_docker_extra_volumes
   ansible.builtin.set_fact:
     caddy_docker_volumes: "{{ caddy_docker_volumes + caddy_docker_extra_volumes }}"
   when: caddy_docker_extra_volumes
 
-- name: Create Caddy Docker container
+- name: present | Create Caddy Docker container
   community.docker.docker_container:
     name: caddy
     image: "{{ caddy_docker_image }}"
@@ -90,7 +90,7 @@
     env: "{{ caddy_docker_environment_variables }}"
     state: present
 
-- name: Start Caddy Docker container
+- name: present | Start Caddy Docker container
   community.docker.docker_container:
     name: caddy
     state: started
