@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: molecule
   vars:
     pip_install_packages:
       - name: docker

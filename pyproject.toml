@@ -9,4 +9,5 @@ dependencies = []
 [dependency-groups]
 dev = [
     "ansible-dev-tools>=25.5.2",
+    "molecule-plugins[docker]>=23.7.0",
 ]
