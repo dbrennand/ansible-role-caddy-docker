@@ -9,4 +9,3 @@ exclude_paths:
   - .git/
 skip_list:
   - template-instead-of-copy
-use_default_rules: true
