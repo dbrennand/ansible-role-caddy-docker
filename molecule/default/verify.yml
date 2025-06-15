@@ -1,6 +1,6 @@
 ---
 - name: Verify
-  hosts: all
+  hosts: molecule
   gather_facts: false
   tasks:
     - name: Verify Caddy is responding on localhost

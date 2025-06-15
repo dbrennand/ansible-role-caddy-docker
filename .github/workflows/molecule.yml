@@ -1,5 +1,6 @@
 name: Molecule
-on: [push, pull_request]
+on:
+  - pull_request
 
 defaults:
   run:
@@ -7,9 +8,9 @@ defaults:
 
 jobs:
   molecule:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           path: dbrennand.caddy_docker
       - uses: gofrolist/molecule-action@v2

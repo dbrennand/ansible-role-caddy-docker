@@ -1,0 +1,13 @@
+[project]
+name = "ansible-role-caddy-docker"
+version = "4.0.0"
+description = "Deploy Caddy in a Docker container."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ansible-dev-tools>=25.5.2",
+    "molecule-plugins[docker]>=23.7.0",
+]
